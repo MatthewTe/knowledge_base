@@ -12,12 +12,13 @@ import (
 	"testing"
 
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 	"github.com/neo4j/neo4j-go-driver/v5/neo4j"
 )
 
 func TestRssFeedXMLIngestion(t *testing.T) {
 
-	testXMLPath := "../../data/rss/38_north_test.rss"
+	testXMLPath := "../data/rss/38_north_test.rss"
 	xmlFile, err := os.Open(testXMLPath)
 	if err != nil {
 		log.Fatal(err)
@@ -31,10 +32,15 @@ func TestRssFeedExtraction(t *testing.T) {
 
 	// TODO: Make this configuration specific to tests using environment params
 
+	err := godotenv.Load("../data/test.env")
+	if err != nil {
+		log.Fatal("Unable to load environment variable for tests", err)
+	}
+
 	ctx := context.Background()
-	dbUri := "neo4j://localhost"
-	dbUser := "neo4j"
-	dbPassword := "Entropy_Investments"
+	dbUri := os.Getenv("dbUri")
+	dbUser := os.Getenv("dbUser")
+	dbPassword := os.Getenv("dbPassword")
 	driver, err := neo4j.NewDriverWithContext(dbUri, neo4j.BasicAuth(dbUser, dbPassword, ""))
 	if err != nil {
 		log.Fatal(nil)
@@ -57,11 +63,15 @@ func TestRssFeedExtraction(t *testing.T) {
 func TestRssFeedEntryExtraction(t *testing.T) {
 
 	// TODO: Make this configuration specific to tests using environment params
+	err := godotenv.Load("../data/test.env")
+	if err != nil {
+		log.Fatal("Unable to load environment variable for tests", err)
+	}
 
 	ctx := context.Background()
-	dbUri := "neo4j://localhost"
-	dbUser := "neo4j"
-	dbPassword := "Entropy_Investments"
+	dbUri := os.Getenv("dbUri")
+	dbUser := os.Getenv("dbUser")
+	dbPassword := os.Getenv("dbPassword")
 	driver, err := neo4j.NewDriverWithContext(dbUri, neo4j.BasicAuth(dbUser, dbPassword, ""))
 	if err != nil {
 		log.Fatal(nil)
@@ -92,11 +102,16 @@ func TestRssFeedEntryExtraction(t *testing.T) {
 }
 
 func TestRssAuthorExtraction(t *testing.T) {
+	err := godotenv.Load("../data/test.env")
+	if err != nil {
+		log.Fatal("Unable to load environment variable for tests", err)
+	}
 
 	ctx := context.Background()
-	dbUri := "neo4j://localhost"
-	dbUser := "neo4j"
-	dbPassword := "Entropy_Investments"
+	dbUri := os.Getenv("dbUri")
+	dbUser := os.Getenv("dbUser")
+	dbPassword := os.Getenv("dbPassword")
+
 	driver, err := neo4j.NewDriverWithContext(dbUri, neo4j.BasicAuth(dbUser, dbPassword, ""))
 	if err != nil {
 		log.Fatal(nil)
@@ -129,12 +144,15 @@ func TestRssAuthorExtraction(t *testing.T) {
 // Testing how the function handler for the endpoint that triggers the ingestion of the Rss Entries and
 // Authors:
 func TestRssEntryIngestionHandler(t *testing.T) {
+	err := godotenv.Load("../data/test.env")
+	if err != nil {
+		log.Fatal("Unable to load environment variable for tests", err)
+	}
 
-	// Creating the database:
 	ctx := context.Background()
-	dbUri := "neo4j://localhost"
-	dbUser := "neo4j"
-	dbPassword := "Entropy_Investments"
+	dbUri := os.Getenv("dbUri")
+	dbUser := os.Getenv("dbUser")
+	dbPassword := os.Getenv("dbPassword")
 	driver, err := neo4j.NewDriverWithContext(dbUri, neo4j.BasicAuth(dbUser, dbPassword, ""))
 	if err != nil {
 		log.Fatal(nil)
