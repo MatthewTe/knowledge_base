@@ -13,6 +13,14 @@ services:
         - neo4j_go_net
     command: neo4j
   
+  test_webserver:
+    build: 
+      context: ./testing/
+    ports: 
+      - 8000:8000
+    volumes:
+      - ./testing/:/app/
+
 networks:
   neo4j_go_net:
     driver: bridge

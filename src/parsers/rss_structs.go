@@ -35,3 +35,28 @@ type RssAuthor struct {
 	Name  string `json:"name"`
 	Email string `json:"email"`
 }
+
+type RssAuthorExtractionSummary struct {
+	Id     string `json:"id"`
+	Name   string `json:"name"`
+	Status string `json:"status"`
+	Error  string `json:"error"`
+}
+
+type RssEntryExtractionSummary struct {
+	Id      string                       `json:"id"`
+	Title   string                       `json:"title"`
+	Url     string                       `json:"url"`
+	Status  string                       `json:"status"`
+	Error   string                       `json:"error"`
+	Authors []RssAuthorExtractionSummary `json:"authors"`
+}
+
+type RssFeedExtractionSummary struct {
+	Id         string                      `json:"id"`
+	Title      string                      `json:"title"`
+	Status     string                      `json:"status"`
+	Error      string                      `json:"error"`
+	RssFeed    RssFeed                     `json:"source_feed"`
+	RssEntries []RssEntryExtractionSummary `json:"entries"`
+}
