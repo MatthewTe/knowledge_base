@@ -8,6 +8,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"path/filepath"
 
 	"github.com/gin-gonic/gin"
 	_ "github.com/mattn/go-sqlite3"
@@ -302,6 +303,24 @@ func main() {
 	db, err := sql.Open("sqlite3", dbPath)
 	if err != nil {
 		log.Fatal("Error opening the database", err)
+	}
+
+	wd, err := os.Getwd()
+	if err != nil {
+		log.Fatal("Could not get current working directory path", err)
+	}
+	parentDir := filepath.Dir(wd)
+	tempDirPath := filepath.Join(parentDir, "temp")
+
+	if _, err := os.Stat(tempDirPath); os.IsNotExist(err) {
+		err := os.Mkdir(tempDirPath, os.ModePerm)
+		if err != nil {
+			fmt.Println("Error creating temp directory:", err)
+		} else {
+			fmt.Println("Temp Directory created:", tempDirPath)
+		}
+	} else {
+		fmt.Println("Temp Directory already exists:", tempDirPath)
 	}
 
 	// Setting up Database:
