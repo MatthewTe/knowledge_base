@@ -21,9 +21,21 @@ services:
     volumes:
       - ./testing/:/app/
 
+  minio:
+    image: minio/minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - minio_storage:/data
+    env_file:
+      - ./data/test.env
+    command: server --console-address ":9001" /data
+
 networks:
   neo4j_go_net:
     driver: bridge
 
 volumes:
   dgraph:
+  minio_storage: {}

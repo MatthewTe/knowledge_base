@@ -15,20 +15,6 @@ import (
 	"github.com/neo4j/neo4j-go-driver/v5/neo4j"
 )
 
-/*
-func TestRssFeedXMLIngestion(t *testing.T) {
-
-	testXMLPath := "../data/rss/38_north_test.rss"
-	xmlFile, err := os.Open(testXMLPath)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	parsers.ExtractFieldsFromRssFeed(xmlFile)
-
-}
-*/
-
 func TestRssFeedExtraction(t *testing.T) {
 
 	fmt.Println("------------------------ TestRssFeedExtraction ------------------------ ")
